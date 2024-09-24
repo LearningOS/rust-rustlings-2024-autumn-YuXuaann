@@ -40,10 +40,32 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
+// 步骤：
+// 1. 如果提供的字符串长度为0，则返回Person的默认值。
+// 2. 按照字符串中的逗号分割字符串。
+// 3. 从分割操作中提取第一个元素，并将其用作名称。
+// 4. 如果名称为空，则返回Person的默认值。
+// 5. 从分割操作中提取另一个元素，并将其解析为`usize`类型的年龄。
+// 如果在解析年龄时出现问题，则返回Person的默认值。
+// 否则，返回一个使用结果实例化的Person对象。
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let word = s.split(',').collect::<Vec<&str>>();
+        println!("{:?}", word);
+        if word.len() != 2 {
+            return Person::default();
+        }
+        match word[0].parse::<String>() {
+            Ok(name) if !name.is_empty() => match word[1].parse::<u8>() {
+                Ok(age) => Person {
+                    name: name,
+                    age: age as usize,
+                },
+                Err(_) => Person::default(),
+            },
+            _ => Person::default(),
+        }
     }
 }
 
