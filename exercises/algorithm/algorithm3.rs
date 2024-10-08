@@ -10,6 +10,7 @@ fn sort<T>(array: &mut [T])
 where
     T: Ord + Clone + Send,
 {
+    //merge_sort
     if array.len() == 1 {
         return;
     }
